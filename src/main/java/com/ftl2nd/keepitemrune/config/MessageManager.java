@@ -25,7 +25,7 @@ import java.util.logging.Logger;
  */
 public final class MessageManager {
 
-    public static final String DEFAULT_PREFIX = "<gradient:#23FABE:#AEFFE8>ᴋᴇᴇᴘɪᴛᴇᴍʀᴜɴᴇ</gradient> <gray>»</gray> ";
+    public static final String DEFAULT_PREFIX = "<gradient:#C084FC:#38BDF8><bold>KeepItemRune</bold></gradient> <dark_gray>»</dark_gray> ";
 
     private final File messagesFile;
     private final Supplier<InputStream> defaultStreamSupplier;

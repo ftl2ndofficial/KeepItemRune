@@ -10,6 +10,7 @@ import com.ftl2nd.keepitemrune.nms.PacketLoreInjector;
 import com.ftl2nd.keepitemrune.service.DeathRecoveryService;
 import com.ftl2nd.keepitemrune.service.RuneService;
 import com.ftl2nd.keepitemrune.util.FoliaScheduler;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
@@ -21,6 +22,7 @@ import java.util.Objects;
 public final class KeepItemRune extends JavaPlugin {
 
     private static final int BSTATS_PLUGIN_ID = 34979;
+    private static final MiniMessage MM = MiniMessage.miniMessage();
 
     private ConfigManager configManager;
     private MessageManager messageManager;
@@ -55,21 +57,21 @@ public final class KeepItemRune extends JavaPlugin {
             getLogger().warning("Failed to initialize bStats metrics.");
         }
 
-        logColored("");
-        logColored("§b __  __     __     ______    ");
-        logColored("§b/\\ \\/ /    /\\ \\   /\\  == \\   ");
-        logColored("§b\\ \\  _\"-.  \\ \\ \\  \\ \\  __<   ");
-        logColored("§b \\ \\_\\ \\_\\  \\ \\_\\  \\ \\_\\ \\_\\ ");
-        logColored("§b  \\/_/\\/_/   \\/_/   \\/_/ /_/ ");
-        logColored("");
-        logColored("§7Version: §f" + getPluginMeta().getVersion() + "§7 | Author: §fftl2nd");
-        logColored("§7Website: §b" + KeepItemRuneCommand.DISCORD_URL);
-        logColored("§7Platform: §e" + (FoliaScheduler.isFolia() ? "Folia" : "Paper/Spigot") + "§7 | Status: §aEnabled");
-        logColored("");
+        logBanner("");
+        logBanner("<gradient:#C084FC:#38BDF8> __  __     __     ______    </gradient>");
+        logBanner("<gradient:#C084FC:#38BDF8>/\\ \\/ /    /\\ \\   /\\  == \\   </gradient>");
+        logBanner("<gradient:#C084FC:#38BDF8>\\ \\  _\"-.  \\ \\ \\  \\ \\  __<   </gradient>");
+        logBanner("<gradient:#C084FC:#38BDF8> \\ \\_\\ \\_\\  \\ \\_\\  \\ \\_\\ \\_\\ </gradient>");
+        logBanner("<gradient:#C084FC:#38BDF8>  \\/_/\\/_/   \\/_/   \\/_/ /_/ </gradient>");
+        logBanner("");
+        logBanner("<gray>Version: <white>" + getPluginMeta().getVersion() + "</white> <dark_gray>|</dark_gray> Author: <white>FTL2nd</white></gray>");
+        logBanner("<gray>Website: <#38BDF8>" + KeepItemRuneCommand.DISCORD_URL + "</#38BDF8></gray>");
+        logBanner("<gray>Platform: <#ffbe76>" + (FoliaScheduler.isFolia() ? "Folia" : "Paper/Spigot") + "</#ffbe76> <dark_gray>|</dark_gray> Status: <#55efc4>Enabled</#55efc4></gray>");
+        logBanner("");
     }
 
-    private void logColored(String msg) {
-        Bukkit.getConsoleSender().sendMessage(msg);
+    private void logBanner(String miniMessageLine) {
+        Bukkit.getConsoleSender().sendMessage(MM.deserialize(miniMessageLine));
     }
 
     @Override

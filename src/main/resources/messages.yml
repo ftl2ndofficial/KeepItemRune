@@ -1,27 +1,27 @@
-# KeepItemRune messages (MiniMessage format)
-# Set any message to "" to disable it.
+# KeepItemRune messages configuration
+# Supports MiniMessage formatting (https://docs.advntr.dev/minimessage/format.html)
 # Discord: https://discord.knualabs.icu
 
 config-version: 1
 
-prefix: "<gradient:#23FABE:#AEFFE8>ᴋᴇᴇᴘɪᴛᴇᴍʀᴜɴᴇ</gradient> <gray>»</gray> "
+prefix: "<gradient:#C084FC:#38BDF8><bold>KeepItemRune</bold></gradient> <dark_gray>»</dark_gray> "
 
 messages:
-  no-permission: "<red>You do not have permission to use this command.</red>"
-  not-player: "<red>Only players can execute this command.</red>"
-  item-add-success: "<green>Rune applied to your item.</green>"
-  item-cannot-be-added: "<red>This item cannot be protected with a rune.</red>"
-  item-is-not-protected: "<red>This item is not protected.</red>"
-  item-unprotect-success: "<green>Removed rune protection from your item.</green>"
-  player-respawn-with-item: "<green>Your protected items have been returned, and their runes have shattered.</green>"
-  reload-config-success: "<green>Configuration reloaded.</green>"
-  too-many-runes: "<red>You can only apply 1 rune at a time.</red>"
-  item-already-protected: "<red>This item is already protected.</red>"
-  player-in-creative: "<red>Cannot apply runes via inventory click in Creative mode.</red>"
-  no-item-in-hand: "<red>You must hold an item in your main hand.</red>"
-  amount-lower-than-1: "<red>Amount must be at least 1.</red>"
-  invalid-amount: "<red>Invalid amount specified.</red>"
-  no-player-selected: "<red>Please specify a player.</red>"
-  player-not-found: "<red>Player not found or offline.</red>"
-  too-many-items: "<red>Cannot apply a rune to a stacked item.</red>"
-  give-rune-success: "<green>Gave <white><amount></white> rune(s) to <yellow><player></yellow>.</green>"
+  no-permission: "<#ff7675>You do not have permission to use this command.</#ff7675>"
+  not-player: "<#ff7675>Only players can execute this command.</#ff7675>"
+  item-add-success: "<#55efc4>Rune applied to your item.</#55efc4>"
+  item-cannot-be-added: "<#ff7675>This item cannot be protected with a rune.</#ff7675>"
+  item-is-not-protected: "<#ff7675>This item is not protected.</#ff7675>"
+  item-unprotect-success: "<#55efc4>Removed rune protection from your item.</#55efc4>"
+  player-respawn-with-item: "<#55efc4>Your protected items have been returned, and their runes have shattered.</#55efc4>"
+  reload-config-success: "<#55efc4>Configuration reloaded.</#55efc4>"
+  too-many-runes: "<#ff7675>You can only apply <#ffbe76>1</#ffbe76> rune at a time.</#ff7675>"
+  item-already-protected: "<#ff7675>This item is already protected.</#ff7675>"
+  player-in-creative: "<#ff7675>Cannot apply runes via inventory click in Creative mode.</#ff7675>"
+  no-item-in-hand: "<#ff7675>You must hold an item in your main hand.</#ff7675>"
+  amount-lower-than-1: "<#ff7675>Amount must be at least <#ffbe76>1</#ffbe76>.</#ff7675>"
+  invalid-amount: "<#ff7675>Invalid amount specified.</#ff7675>"
+  no-player-selected: "<#ff7675>Please specify a player.</#ff7675>"
+  player-not-found: "<#ff7675>Player not found or offline.</#ff7675>"
+  too-many-items: "<#ff7675>Cannot apply a rune to a stacked item.</#ff7675>"
+  give-rune-success: "<#55efc4>Gave <#ffbe76><amount></#ffbe76> rune(s) to <#ffbe76><player></#ffbe76>.</#55efc4>"

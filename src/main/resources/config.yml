@@ -7,16 +7,16 @@ config-version: 1
 # Settings for the rune item used to protect equipment
 rune:
   material: "AMETHYST_SHARD"
-  name: "<gradient:#FF55FF:#55FFFF><bold>Keep Item Rune</bold></gradient>"
+  name: "<gradient:#C084FC:#38BDF8><bold>Keep Item Rune</bold></gradient>"
   lore:
-    - "<gray>Drag and drop onto an item in your inventory"
-    - "<gray>to protect it from dropping on death."
+    - "<gray>Drag and drop onto an item in your inventory</gray>"
+    - "<gray>to protect it from dropping on death.</gray>"
     - ""
-    - "<dark_gray>Consumed upon death.</dark_gray>"
+    - "<#ffbe76>Consumed upon death.</#ffbe76>"
   glow: true
 
 # Lore line appended (client-side) below any existing lore on protected items
-lore: "<b><gradient:#FF1515:#FF7373>PROTECTED FROM DEATH</gradient></b>"
+lore: "<gradient:#C084FC:#38BDF8><bold>PROTECTED FROM DEATH</bold></gradient>"
 
 # Sound effects played to players.
 # Set enabled: false or sound: "NONE" to disable a specific sound.

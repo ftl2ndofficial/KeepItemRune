@@ -181,23 +181,29 @@ public final class KeepItemRuneCommand implements CommandExecutor, TabCompleter 
     }
 
     private void sendHelp(CommandSender sender) {
+        String prefix = messageManager.getPrefix();
+        String version = plugin != null ? plugin.getPluginMeta().getVersion() : "1.0.0";
+
         sender.sendMessage(messageManager.getMiniMessage().deserialize(
-                "<newline><gradient:#23FABE:#AEFFE8><bold>KeepItemRune</bold></gradient> <gray>- by FTL2nd ("
-                        + "<click:open_url:'" + DISCORD_URL + "'><underlined>" + DISCORD_URL + "</underlined></click>)</gray>"
+                prefix + "<gradient:#C084FC:#38BDF8><bold>KeepItemRune</bold></gradient> <gray>v" + version
+                        + "</gray> <dark_gray>|</dark_gray> <gray>Author:</gray> <white>FTL2nd</white> <dark_gray>(</dark_gray>"
+                        + "<click:open_url:'" + DISCORD_URL + "'>"
+                        + "<hover:show_text:'<gradient:#C084FC:#38BDF8>Click to open Discord</gradient>'>"
+                        + "<#38BDF8>" + DISCORD_URL + "</#38BDF8></hover></click><dark_gray>)</dark_gray>"
         ));
 
         if (RunePermission.hasAnyCommandPermission(sender)) {
-            StringBuilder helpBuilder = new StringBuilder("<newline><white>Available commands:</white>");
             for (SubCommand cmd : SubCommand.values()) {
                 if (cmd.permission().has(sender)) {
-                    helpBuilder.append("<newline><gray>")
-                            .append(cmd.usage())
-                            .append("</gray> <white>- ")
-                            .append(cmd.description())
-                            .append("</white>");
+                    String suggestCmd = "/kir " + cmd.primaryName();
+                    String line = prefix + "<gray>• </gray>"
+                            + "<click:suggest_command:'" + suggestCmd + "'>"
+                            + "<hover:show_text:'<gradient:#C084FC:#38BDF8>Click to suggest: " + cmd.usage() + "</gradient>'>"
+                            + "<#ffbe76>" + cmd.usage() + "</#ffbe76></hover></click>"
+                            + " <dark_gray>-</dark_gray> <gray>" + cmd.description() + "</gray>";
+                    sender.sendMessage(messageManager.getMiniMessage().deserialize(line));
                 }
             }
-            sender.sendMessage(messageManager.getMiniMessage().deserialize(helpBuilder.toString()));
         }
     }
 

@@ -177,10 +177,10 @@ public enum RuneEffect {
                 if (dataType == Void.class) {
                     world.spawnParticle(particle, center, count, offsetX, offsetY, offsetZ, speed);
                 } else if (dataType == Particle.DustOptions.class) {
-                    Particle.DustOptions dust = new Particle.DustOptions(Color.fromRGB(255, 85, 255), 1.2f);
+                    Particle.DustOptions dust = new Particle.DustOptions(Color.fromRGB(192, 132, 252), 1.2f);
                     world.spawnParticle(particle, center, count, offsetX, offsetY, offsetZ, speed, dust);
                 } else if (dataType == Color.class) {
-                    world.spawnParticle(particle, center, count, offsetX, offsetY, offsetZ, speed, Color.fromRGB(255, 85, 255));
+                    world.spawnParticle(particle, center, count, offsetX, offsetY, offsetZ, speed, Color.fromRGB(192, 132, 252));
                 } else if (dataType == Float.class) {
                     world.spawnParticle(particle, center, count, offsetX, offsetY, offsetZ, speed, 1.0f);
                 }

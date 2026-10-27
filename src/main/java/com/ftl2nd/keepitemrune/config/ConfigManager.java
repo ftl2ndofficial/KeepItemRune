@@ -41,14 +41,14 @@ import java.util.logging.Logger;
 public final class ConfigManager {
 
     public static final Material DEFAULT_RUNE_MATERIAL = Material.AMETHYST_SHARD;
-    public static final String DEFAULT_RUNE_NAME = "<gradient:#FF55FF:#55FFFF><bold>Keep Item Rune</bold></gradient>";
+    public static final String DEFAULT_RUNE_NAME = "<gradient:#C084FC:#38BDF8><bold>Keep Item Rune</bold></gradient>";
     public static final List<String> DEFAULT_RUNE_LORE = List.of(
-            "<gray>Drag and drop onto an item in your inventory",
-            "<gray>to protect it from dropping on death.",
+            "<gray>Drag and drop onto an item in your inventory</gray>",
+            "<gray>to protect it from dropping on death.</gray>",
             "",
-            "<dark_gray>Consumed upon death.</dark_gray>"
+            "<#ffbe76>Consumed upon death.</#ffbe76>"
     );
-    public static final String DEFAULT_PROTECTED_LORE = "<b><gradient:#FF1515:#FF7373>PROTECTED FROM DEATH</gradient></b>";
+    public static final String DEFAULT_PROTECTED_LORE = "<gradient:#C084FC:#38BDF8><bold>PROTECTED FROM DEATH</bold></gradient>";
 
     // Items introduced in 1.21.9+ / 1.21.11+ so older 1.21.x servers do not warn on the default whitelist
     private static final Set<String> FUTURE_VERSION_ITEMS = Set.of(
