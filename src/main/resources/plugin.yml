@@ -1,0 +1,36 @@
+name: KeepItemRune
+version: '${project.version}'
+main: com.ftl2nd.keepitemrune.KeepItemRune
+api-version: '1.21'
+folia-supported: true
+prefix: KeepItemRune
+authors: [ FTL2nd ]
+description: Protect items from dropping on death using customizable runes.
+website: https://discord.knualabs.icu
+
+commands:
+  keepitemrune:
+    description: Main command for KeepItemRune.
+    aliases: [ kir, keepitemvoucher, kiv ]
+
+permissions:
+  keepitemrune.admin:
+    description: Grants access to all KeepItemRune commands.
+    default: op
+    children:
+      keepitemrune.reload: true
+      keepitemrune.giverune: true
+      keepitemrune.additem: true
+      keepitemrune.removeitem: true
+  keepitemrune.reload:
+    description: Allows reloading the plugin configuration.
+    default: op
+  keepitemrune.giverune:
+    description: Allows giving runes to players.
+    default: op
+  keepitemrune.additem:
+    description: Allows applying rune protection to the held item.
+    default: op
+  keepitemrune.removeitem:
+    description: Allows removing rune protection from the held item.
+    default: op

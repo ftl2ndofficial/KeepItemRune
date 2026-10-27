@@ -1,0 +1,148 @@
+# KeepItemRune configuration
+# Supports Minecraft 1.21 - 26.3 (Paper & Folia)
+# Discord: https://discord.knualabs.icu
+
+config-version: 1
+
+# Settings for the rune item used to protect equipment
+rune:
+  material: "AMETHYST_SHARD"
+  name: "<gradient:#FF55FF:#55FFFF><bold>Keep Item Rune</bold></gradient>"
+  lore:
+    - "<gray>Drag and drop onto an item in your inventory"
+    - "<gray>to protect it from dropping on death."
+    - ""
+    - "<dark_gray>Consumed upon death.</dark_gray>"
+  glow: true
+
+# Lore line appended (client-side) below any existing lore on protected items
+lore: "<b><gradient:#FF1515:#FF7373>PROTECTED FROM DEATH</gradient></b>"
+
+# Sound effects played to players.
+# Set enabled: false or sound: "NONE" to disable a specific sound.
+sounds:
+  apply-success:
+    enabled: true
+    sound: "BLOCK_ENCHANTMENT_TABLE_USE"
+    volume: 1.0
+    pitch: 1.2
+  apply-fail:
+    enabled: true
+    sound: "ENTITY_VILLAGER_NO"
+    volume: 1.0
+    pitch: 1.0
+  death-trigger:
+    enabled: true
+    sound: "BLOCK_AMETHYST_CLUSTER_BREAK"
+    volume: 1.2
+    pitch: 0.8
+  respawn-restore:
+    enabled: true
+    sound: "ITEM_TOTEM_USE"
+    volume: 0.6
+    pitch: 1.2
+  remove-success:
+    enabled: true
+    sound: "BLOCK_GRINDSTONE_USE"
+    volume: 1.0
+    pitch: 1.0
+
+# Visual particle effects when a player carrying protected items dies or respawns.
+# Set enabled: false or particle: "NONE" to disable a specific effect.
+effects:
+  death:
+    enabled: true
+    particle: "TOTEM_OF_UNDYING"
+    count: 35
+    offset-x: 0.4
+    offset-y: 0.8
+    offset-z: 0.4
+    speed: 0.15
+  respawn:
+    enabled: true
+    particle: "END_ROD"
+    count: 25
+    offset-x: 0.4
+    offset-y: 0.8
+    offset-z: 0.4
+    speed: 0.08
+    totem-animation: false
+
+# Items that can be protected with a rune.
+# Use "*" to allow all items.
+whitelist-items:
+  - "NETHERITE_SWORD"
+  - "NETHERITE_AXE"
+  - "NETHERITE_PICKAXE"
+  - "NETHERITE_SHOVEL"
+  - "NETHERITE_HOE"
+  - "NETHERITE_SPEAR"
+  - "NETHERITE_HELMET"
+  - "NETHERITE_CHESTPLATE"
+  - "NETHERITE_LEGGINGS"
+  - "NETHERITE_BOOTS"
+
+  - "DIAMOND_SWORD"
+  - "DIAMOND_AXE"
+  - "DIAMOND_PICKAXE"
+  - "DIAMOND_SHOVEL"
+  - "DIAMOND_HOE"
+  - "DIAMOND_SPEAR"
+  - "DIAMOND_HELMET"
+  - "DIAMOND_CHESTPLATE"
+  - "DIAMOND_LEGGINGS"
+  - "DIAMOND_BOOTS"
+
+  - "GOLDEN_SWORD"
+  - "GOLDEN_AXE"
+  - "GOLDEN_PICKAXE"
+  - "GOLDEN_SHOVEL"
+  - "GOLDEN_HOE"
+  - "GOLDEN_SPEAR"
+  - "GOLDEN_HELMET"
+  - "GOLDEN_CHESTPLATE"
+  - "GOLDEN_LEGGINGS"
+  - "GOLDEN_BOOTS"
+
+  - "IRON_SWORD"
+  - "IRON_AXE"
+  - "IRON_PICKAXE"
+  - "IRON_SHOVEL"
+  - "IRON_HOE"
+  - "IRON_SPEAR"
+  - "IRON_HELMET"
+  - "IRON_CHESTPLATE"
+  - "IRON_LEGGINGS"
+  - "IRON_BOOTS"
+
+  - "COPPER_SWORD"
+  - "COPPER_AXE"
+  - "COPPER_PICKAXE"
+  - "COPPER_SHOVEL"
+  - "COPPER_HOE"
+  - "COPPER_SPEAR"
+  - "COPPER_HELMET"
+  - "COPPER_CHESTPLATE"
+  - "COPPER_LEGGINGS"
+  - "COPPER_BOOTS"
+
+  - "STONE_SWORD"
+  - "STONE_AXE"
+  - "STONE_PICKAXE"
+  - "STONE_SHOVEL"
+  - "STONE_HOE"
+  - "STONE_SPEAR"
+
+  - "WOODEN_SWORD"
+  - "WOODEN_AXE"
+  - "WOODEN_PICKAXE"
+  - "WOODEN_SHOVEL"
+  - "WOODEN_HOE"
+  - "WOODEN_SPEAR"
+
+  - "MACE"
+  - "TRIDENT"
+  - "BOW"
+  - "CROSSBOW"
+  - "ELYTRA"
+  - "SHIELD"
