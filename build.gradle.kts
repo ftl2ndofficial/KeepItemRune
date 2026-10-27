@@ -1,5 +1,6 @@
 plugins {
     `java-library`
+    id("com.gradleup.shadow") version "9.3.1"
 }
 
 group = "com.ftl2nd"
@@ -17,6 +18,8 @@ repositories {
 }
 
 dependencies {
+    implementation("org.bstats:bstats-bukkit:3.2.1")
+
     compileOnly("io.papermc.paper:paper-api:26.2.build.+")
     compileOnly(files("D:/Làm plugin/BetterSurvival/26.2/versions/26.2/paper-26.2.jar"))
     compileOnly(fileTree("D:/Làm plugin/BetterSurvival/26.2/libraries") { include("**/*.jar") })
@@ -48,8 +51,23 @@ tasks {
     }
 
     jar {
+        archiveClassifier.set("thin")
+        from("LICENSE")
+    }
+
+    shadowJar {
         archiveClassifier.set("")
         from("LICENSE")
+        configurations = project.configurations.runtimeClasspath.map { setOf(it) }
+
+        dependencies {
+            // Only merge bStats into the final jar, no other dependencies
+            exclude { it.moduleGroup != "org.bstats" }
+        }
+
+        // Relocate bStats into the plugin's package to avoid conflicts with other
+        // plugins using bStats
+        relocate("org.bstats", project.group.toString())
     }
 
     test {
@@ -69,6 +87,7 @@ tasks {
     }
 
     build {
+        dependsOn(shadowJar)
         dependsOn(unitTest)
     }
 }

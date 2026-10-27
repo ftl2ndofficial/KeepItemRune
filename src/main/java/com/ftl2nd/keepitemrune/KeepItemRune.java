@@ -9,6 +9,8 @@ import com.ftl2nd.keepitemrune.nms.NmsVersionTier;
 import com.ftl2nd.keepitemrune.nms.PacketLoreInjector;
 import com.ftl2nd.keepitemrune.service.DeathRecoveryService;
 import com.ftl2nd.keepitemrune.service.RuneService;
+import com.ftl2nd.keepitemrune.util.FoliaScheduler;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
@@ -17,6 +19,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Objects;
 
 public final class KeepItemRune extends JavaPlugin {
+
+    private static final int BSTATS_PLUGIN_ID = 34979;
 
     private ConfigManager configManager;
     private MessageManager messageManager;
@@ -45,7 +49,27 @@ public final class KeepItemRune extends JavaPlugin {
             PacketLoreInjector.injectPlayer(player, configManager);
         }
 
-        getLogger().info("KeepItemRune enabled successfully (" + KeepItemRuneCommand.DISCORD_URL + ").");
+        try {
+            new Metrics(this, BSTATS_PLUGIN_ID);
+        } catch (Exception e) {
+            getLogger().warning("Failed to initialize bStats metrics.");
+        }
+
+        logColored("");
+        logColored("§b __  __     __     ______    ");
+        logColored("§b/\\ \\/ /    /\\ \\   /\\  == \\   ");
+        logColored("§b\\ \\  _\"-.  \\ \\ \\  \\ \\  __<   ");
+        logColored("§b \\ \\_\\ \\_\\  \\ \\_\\  \\ \\_\\ \\_\\ ");
+        logColored("§b  \\/_/\\/_/   \\/_/   \\/_/ /_/ ");
+        logColored("");
+        logColored("§7Version: §f" + getPluginMeta().getVersion() + "§7 | Author: §fftl2nd");
+        logColored("§7Website: §b" + KeepItemRuneCommand.DISCORD_URL);
+        logColored("§7Platform: §e" + (FoliaScheduler.isFolia() ? "Folia" : "Paper/Spigot") + "§7 | Status: §aEnabled");
+        logColored("");
+    }
+
+    private void logColored(String msg) {
+        Bukkit.getConsoleSender().sendMessage(msg);
     }
 
     @Override
@@ -56,7 +80,7 @@ public final class KeepItemRune extends JavaPlugin {
         for (Player player : Bukkit.getOnlinePlayers()) {
             PacketLoreInjector.uninjectPlayer(player);
         }
-        getLogger().info("KeepItemRune disabled.");
+        getLogger().info("KeepItemRune has been disabled.");
     }
 
     public ConfigManager getConfigManager() {
