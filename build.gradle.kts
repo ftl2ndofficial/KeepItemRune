@@ -36,6 +36,22 @@ tasks {
     compileJava {
         options.encoding = "UTF-8"
         options.release.set(25)
+        doLast {
+            // Set class file major version to 65 (Java 21) so Paper 1.21.x's bundled ASM 9.7.1
+            // and both Java 21 & Java 25 runtimes can read all plugin classes without error.
+            destinationDirectory.asFileTree.matching { include("**/*.class") }.forEach { classFile ->
+                val bytes = classFile.readBytes()
+                if (bytes.size >= 8 &&
+                    bytes[0] == 0xCA.toByte() && bytes[1] == 0xFE.toByte() &&
+                    bytes[2] == 0xBA.toByte() && bytes[3] == 0xBE.toByte() &&
+                    bytes[7] > 65.toByte()
+                ) {
+                    bytes[6] = 0
+                    bytes[7] = 65
+                    classFile.writeBytes(bytes)
+                }
+            }
+        }
     }
 
     compileTestJava {
@@ -53,11 +69,17 @@ tasks {
     jar {
         archiveClassifier.set("thin")
         from("LICENSE")
+        manifest {
+            attributes("Paperweight-Mappings-Namespace" to "mojang")
+        }
     }
 
     shadowJar {
         archiveClassifier.set("")
         from("LICENSE")
+        manifest {
+            attributes("Paperweight-Mappings-Namespace" to "mojang")
+        }
         configurations = project.configurations.runtimeClasspath.map { setOf(it) }
 
         dependencies {
