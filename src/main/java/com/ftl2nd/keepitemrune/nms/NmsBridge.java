@@ -83,6 +83,10 @@ public final class NmsBridge {
     private static Method setPlayerInvContentsGetter;
     private static Constructor<?> setPlayerInvCtor;
 
+    private static Method compoundTagRemoveMethod;
+    private static Method numericTagByteMethod;
+    private static Method numericTagIntMethod;
+
     static {
         initReflectionBindings();
     }
@@ -118,8 +122,9 @@ public final class NmsBridge {
                 idClass = Class.forName("net.minecraft.resources.ResourceLocation");
             }
             parseResourceKeyMethod = idClass.getMethod("tryParse", String.class);
-            for (Method m : BuiltInRegistries.ITEM.getClass().getMethods()) {
-                if (m.getName().equals("containsKey") && m.getParameterCount() == 1) {
+            Class<?> registryClass = Class.forName("net.minecraft.core.Registry");
+            for (Method m : registryClass.getMethods()) {
+                if (m.getName().equals("containsKey") && m.getParameterCount() == 1 && m.getParameterTypes()[0] == idClass) {
                     registryContainsKeyMethod = m;
                 } else if (m.getName().equals("getKey") && m.getParameterCount() == 1) {
                     registryGetKeyMethod = m;
@@ -158,6 +163,14 @@ public final class NmsBridge {
             setPlayerInvSlotGetter = findMethod(setPlayerInvPacketClass, "slot", "getSlot");
             setPlayerInvContentsGetter = findMethod(setPlayerInvPacketClass, "contents", "getContents");
             setPlayerInvCtor = setPlayerInvPacketClass.getConstructor(int.class, ItemStack.class);
+        } catch (Throwable ignored) {
+        }
+
+        // Bind NBT methods whose signatures changed between 1.21.1 and 1.21.5+ / 26.x
+        try {
+            compoundTagRemoveMethod = CompoundTag.class.getMethod("remove", String.class);
+            numericTagByteMethod = findMethod(NumericTag.class, "byteValue", "getAsByte");
+            numericTagIntMethod = findMethod(NumericTag.class, "intValue", "getAsInt");
         } catch (Throwable ignored) {
         }
     }
@@ -281,8 +294,9 @@ public final class NmsBridge {
             return false;
         }
         Tag val = pbv.get(PROTECTED_KEY);
-        if (val instanceof NumericTag num) {
-            return num.byteValue() == 1;
+        Byte byteVal = extractByteValue(val);
+        if (byteVal != null) {
+            return byteVal == 1;
         }
         if (val instanceof StringTag str) {
             return "true".equalsIgnoreCase(unwrapStringTag(str));
@@ -339,11 +353,12 @@ public final class NmsBridge {
         if (!(root.get(PUBLIC_BUKKIT_VALUES) instanceof CompoundTag pbv)) {
             return null;
         }
-        if (!(pbv.get(CLIENT_LORE_MARKER_KEY) instanceof NumericTag markerTag)) {
+        Integer injectedCountObj = extractIntValue(pbv.get(CLIENT_LORE_MARKER_KEY));
+        if (injectedCountObj == null) {
             return null;
         }
 
-        int injectedCount = markerTag.intValue();
+        int injectedCount = injectedCountObj;
         ItemStack copy = nmsStack.copy();
 
         ItemLore existingLore = copy.getOrDefault(DataComponents.LORE, ItemLore.EMPTY);
@@ -359,9 +374,9 @@ public final class NmsBridge {
 
         CustomData.update(DataComponents.CUSTOM_DATA, copy, rootTag -> {
             if (rootTag.get(PUBLIC_BUKKIT_VALUES) instanceof CompoundTag innerPbv) {
-                innerPbv.remove(CLIENT_LORE_MARKER_KEY);
+                removeCompoundKey(innerPbv, CLIENT_LORE_MARKER_KEY);
                 if (innerPbv.isEmpty()) {
-                    rootTag.remove(PUBLIC_BUKKIT_VALUES);
+                    removeCompoundKey(rootTag, PUBLIC_BUKKIT_VALUES);
                 }
             }
         });
@@ -509,6 +524,54 @@ public final class NmsBridge {
             }
         }
         return packet;
+    }
+
+    private static Byte extractByteValue(Tag tag) {
+        if (tag == null) {
+            return null;
+        }
+        if (ByteTag.ONE.equals(tag)) {
+            return (byte) 1;
+        }
+        if (ByteTag.ZERO.equals(tag)) {
+            return (byte) 0;
+        }
+        if (numericTagByteMethod != null && NumericTag.class.isInstance(tag)) {
+            try {
+                Object val = numericTagByteMethod.invoke(tag);
+                if (val instanceof Number n) {
+                    return n.byteValue();
+                }
+            } catch (Throwable ignored) {
+            }
+        }
+        return null;
+    }
+
+    private static Integer extractIntValue(Tag tag) {
+        if (tag == null) {
+            return null;
+        }
+        if (numericTagIntMethod != null && NumericTag.class.isInstance(tag)) {
+            try {
+                Object val = numericTagIntMethod.invoke(tag);
+                if (val instanceof Number n) {
+                    return n.intValue();
+                }
+            } catch (Throwable ignored) {
+            }
+        }
+        return null;
+    }
+
+    private static void removeCompoundKey(CompoundTag tag, String key) {
+        if (tag == null || key == null || compoundTagRemoveMethod == null) {
+            return;
+        }
+        try {
+            compoundTagRemoveMethod.invoke(tag, key);
+        } catch (Throwable ignored) {
+        }
     }
 
     private static String unwrapStringTag(StringTag tag) {

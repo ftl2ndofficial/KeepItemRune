@@ -40,7 +40,7 @@ To build the plugin from source:
 ./gradlew clean build
 ```
 
-The compiled JAR is generated at `build/libs/KeepItemRune-1.0.0.jar`.
+The compiled JAR is generated at `build/libs/KeepItemRune-1.0.1.jar`.
 
 ## License
 
